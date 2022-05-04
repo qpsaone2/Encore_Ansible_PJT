@@ -1,0 +1,14 @@
+- name: Start Services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: "{{ svc_list }}"
+
+- name: OPen Port
+  firewalld:
+    port: 3306/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+

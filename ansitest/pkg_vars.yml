@@ -1,0 +1,5 @@
+pkg_list:
+- mariadb-server
+- firewalld
+- python3-pymysql
+

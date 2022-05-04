@@ -1,0 +1,19 @@
+- name: install php
+  apt:
+    name: software-properties-common
+    update_cache: yes
+    state: latest
+
+- name: ansible_repo
+  ansible.builtin.apt_repository:
+    repo: ppa:ondrej/php
+    update_cache: yes
+
+- name: install lib 
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: latest
+  loop: ['php8.0', 'php8.0-common']
+
+

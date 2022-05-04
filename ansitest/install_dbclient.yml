@@ -1,0 +1,5 @@
+- apt:
+      name: mariadb-client
+      update_cache: yes
+      state: latest
+

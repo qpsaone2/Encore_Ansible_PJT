@@ -1,0 +1,4 @@
+svc_list:
+- mariadb
+- firewalld
+

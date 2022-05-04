@@ -1,0 +1,6 @@
+- lineinfile:
+    path: /etc/mysql/my.cnf
+    regexp: '^bind-address'
+    line: 'bind-address = 0.0.0.0'
+    backup: yes
+

@@ -1,0 +1,5 @@
+- service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+

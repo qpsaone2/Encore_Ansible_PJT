@@ -1,0 +1,6 @@
+- name: Install Packages
+  apt:
+    name: "{{ pkg_list }}"
+    update_cache: yes
+    state: latest
+

@@ -1,0 +1,22 @@
+- name: Set the root password
+  mysql_user:
+     name: "{{ login_root[0] }}"
+     password: "{{ login_root[1] }}"
+     login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Remove all anonymous user accounts
+  mysql_user:
+    name: ''
+    host_all: yes
+    state: absent
+    login_user: "{{ login_root[0] }}"
+    login_password: "{{ login_root[1] }}"
+
+- name: Remove the MySQL test database
+  mysql_db:
+    name: test
+    state: absent
+    login_user: "{{ login_root[0] }}"
+    login_password: "{{ login_root[1] }}"
+
+

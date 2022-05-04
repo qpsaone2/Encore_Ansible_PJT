@@ -1,0 +1,29 @@
+- name: Creates database for Wordpress
+  mysql_db:
+    name: "{{ create_databases }}"
+    state: present
+    login_user: "{{ login_root[0] }}"
+    login_password: "{{ login_root[1] }}"
+
+- name: Create MySQL user for Wordpress
+  mysql_user:
+    name: "{{ create_user }}"
+    password: "{{ user_passwd }}"
+    priv: "*.*:ALL"
+    host: '%'
+    state: present
+    login_user: "{{ login_root[0] }}"
+    login_password: "{{ login_root[1] }}"
+
+- name: Enable remote login to mysql
+  lineinfile:
+    path: /etc/mysql/my.cnf
+    regexp: '^bind-address'
+    line: 'bind-address = 0.0.0.0'
+    backup: yes
+
+- name: Restart service
+  service:
+    name: mariadb
+    state: restarted
+

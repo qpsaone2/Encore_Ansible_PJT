@@ -1,0 +1,47 @@
+- name : Download wordpress Archive
+  get_url:
+    url: https://wordpress.org/latest.tar.gz
+    dest: /home/vagrant/latest.tar.gz
+
+- name: Unarchive wordpress
+  unarchive:
+    src: /home/vagrant/latest.tar.gz
+    remote_src: true
+    dest: /var/www/html
+
+- name: copy wp-config.php
+  copy:
+    src: /home/vagrant/ansitest/wp_config.j2
+    dest: /var/www/html/wordpress/wp-config.php
+
+- name: Change_db_name
+  replace:
+    path: /var/www/html/wordpress/wp-config.php
+    regexp: database_name_here
+    replace: "{{ create_databases }}"
+
+- name: Change_user_name
+  replace:
+    dest: /var/www/html/wordpress/wp-config.php
+    regexp: username_here
+    replace: "{{ create_user }}"
+
+- name: Change_user_pw
+  replace:
+    dest: /var/www/html/wordpress/wp-config.php
+    regexp: password_here
+    replace: "{{ user_passwd }}"
+
+- name: Change_host
+  replace:
+    dest: /var/www/html/wordpress/wp-config.php
+    regexp: localhost
+    replace: "{{ db_host }}"
+
+- name: Change file ownership and group
+  ansible.builtin.file:
+    path: /var/www/html/wordpress/
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data

@@ -1,0 +1,17 @@
+- name: make a dir and file
+  hosts: ansi-node1
+  tasks:
+  - name: make a dir
+    file:
+      path: /home/vagrant/ansitest/wpconfig1/
+      state: directory
+
+  - name: make a file
+    file:
+      path: /home/vagrant/ansitest/wpconfig1/wp-config.php
+      state: touch
+
+  - name: make a wp-config
+    copy:
+      dest: /home/vagrant/ansitest/wpconfig1/wp-config.php
+      content: "aaaa"

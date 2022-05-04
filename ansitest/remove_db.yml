@@ -1,0 +1,6 @@
+- mysql_db:
+    name: test
+    state: absent
+    login_user: "{{ login_root[0] }}"
+    login_password: "{{ login_root[1] }}"
+

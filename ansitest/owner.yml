@@ -1,0 +1,9 @@
+- name: Change file ownership and group
+  hosts: ansi-node1
+  tasks:
+  - ansible.builtin.file:
+      path: /var/www/html/wordpress
+      state: directory
+      recurse: yes
+      owner: www-data
+      group: www-data

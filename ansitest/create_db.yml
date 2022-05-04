@@ -1,0 +1,6 @@
+- mysql_db:
+    name: "{{ create_databases }}"
+    state: present
+    login_user: "{{ login_root[0] }}"
+    login_password: "{{ login_root[1] }}"
+

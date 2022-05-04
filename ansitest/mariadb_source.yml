@@ -1,0 +1,4 @@
+- lineinfile:
+    path: /etc/apt/sources.list
+    line: deb [arch=amd64,arm64,ppc64el] https://mirror.yongbok.net/mariadb/repo/10.2/ubuntu bionic main deb-src https://mirror.yongbok.net/mariadb/repo/10.2/ubuntu bionic main
+

@@ -1,0 +1,5 @@
+- mysql_user:
+    name: "{{ login_root[0] }}"
+    password: "{{ login_root[1] }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+

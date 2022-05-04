@@ -1,0 +1,79 @@
+- name: Share sources
+  hosts: ansi-node1, ansi-node2
+  tasks:
+  - name: Add an Apt signing key, uses whichever key is at the URL
+    import_tasks: URL_key.yml
+
+  - name: Create a custom MariaDB sources.list file
+    import_tasks: mariadb_source.yml
+
+- name: main_yml
+  hosts: ansi-node1
+  gather_facts: no
+  vars_prompt:
+  - name: create_databases
+    prompt: DB_name
+    private: no
+  - name: create_user
+    prompt: user_name
+    private: no
+  - name: user_passwd
+    prompt: user_pw
+    private: yes
+    confirm: yes
+  - name: db_host
+    prompt: DBhost_IP
+    private: no
+  become: yes
+  tasks:
+  - name: install_apache2
+    import_tasks: install_apache2.yml
+
+  - name: start_apache2
+    import_tasks: started_service.yml
+
+  - name: firewalld_setting
+    import_tasks: firewalld.yml
+
+  - name: install_php8.0
+    import_tasks: install_php.yml
+
+  - name: Download_wordpress
+    import_tasks: install_wordpress.yml
+
+  - name: install_mariadb_client
+    import_tasks: install_dbclient.yml
+
+  - name: apache2 restarted
+    import_tasks: restarted_service.yml
+
+- name: DB server
+  hosts: ansi-node2
+  vars_files:
+  - pkg_vars.yml
+  - svc_vars.yml
+  - login.yml
+  vars_prompt:
+  - name: create_databases
+    prompt: DB_name
+    private: no
+  - name: create_user
+    prompt: user_name
+    private: no
+  - name: user_passwd
+    prompt: user_pw
+    private: yes
+    confirm: yes
+  tasks:
+  - name: Install Packages
+    import_tasks: install_pkgs.yml
+
+  - name: Start Service and Open Port
+    import_tasks: start_open.yml
+
+  - name: Set the MariaDB
+    import_tasks: set_db.yml
+
+  - name: Creates database and Create user
+    import_tasks: create_db_user.yml
+
